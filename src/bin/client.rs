@@ -38,7 +38,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut siv = Cursive::default();
     siv.set_theme(create_theme());
 
-    let header = TextView::new("Rust Chat Application")
+    let header = TextView::new("🎀 Rusty Chat 🎀")
         .h_align(HAlign::Center)
         .style(Style::from(ColorStyle::new(
             PaletteColor::TitlePrimary,
@@ -49,7 +49,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let message_view = TextView::new("")
         .with_name("message_view")
         .scrollable()
-        .min_height(25);
+        .min_height(25)
+        .full_height();
 
     let message_view = ScrollView::new(message_view)
         .scroll_strategy(cursive::view::ScrollStrategy::StickToBottom)
@@ -57,7 +58,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .full_width();
 
     let input_view = EditView::new()
-        .on_submit(move |s, text| send_messages(s, text.to_string()))
+        .on_submit(move |s, text| {
+            send_messages(s, text.to_string());
+            s.call_on_name("input_view", |view: &mut EditView| {
+                view.set_content("");
+            });
+        })
         .with_name("input_view")
         .max_height(4)
         .full_width();
