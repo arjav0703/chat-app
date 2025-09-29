@@ -28,7 +28,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let listener = TcpListener::bind(bind_addr).await?;
 
-    let (tx, _rx) = broadcast::channel::<String>(100);
+    let (tx, _) = broadcast::channel::<String>(100);
 
     loop {
         let (socket, addr) = listener.accept().await?;
@@ -40,7 +40,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         );
 
         let tx = tx.clone();
-        let mut rx = tx.subscribe();
+        let rx = tx.subscribe();
 
         tokio::spawn(async move {
             handle_client(socket, tx, rx).await;
@@ -51,9 +51,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 async fn handle_client(
-    mut socket: TcpStream,
-    tx: broadcast::Sender<String>,
-    mut rx: broadcast::Receiver<String>,
+    mut socket: TcpStream,               // TCP stream for the client
+    tx: broadcast::Sender<String>,       // broadcast sender to send messages to all clients
+    mut rx: broadcast::Receiver<String>, // broadcast receiver to receive messages from other clients
 ) {
     let (reader, mut writer) = socket.split();
     let mut reader = BufReader::new(reader);
@@ -72,6 +72,7 @@ async fn handle_client(
     };
 
     let join_msg_json = serde_json::to_string(&join_msg).unwrap();
+    dbg!(&join_msg_json);
     tx.send(join_msg_json).unwrap();
 
     let mut line = String::new();
@@ -88,7 +89,9 @@ async fn handle_client(
                      message_type: MessageType::UserMessage,
                  };
                  let json = serde_json::to_string(&msg).unwrap();
+                 dbg!(&json);
                  tx.send(json).unwrap();
+                 dbg!(&line);
 
                  // clear the buffer
                  line.clear();
@@ -97,7 +100,7 @@ async fn handle_client(
             result =  rx.recv() => {
                 let msg = result.unwrap();
                 writer.write_all(msg.as_bytes()).await.unwrap();
-                writer.write_all(b"/n").await.unwrap();
+                writer.write_all(b"\n").await.unwrap();
 
             }
         }
