@@ -33,3 +33,6 @@ Rusty Chat is a simple, TUI-based chat application built with Rust using the `cu
     ```bash
     cargo run --bin client <username>
     ```
+
+### Acknowledgements
+I used this (https://youtu.be/653rafFNBmA?si=mjYuBcQNu69gOYtM) video as a reference to build this project.
