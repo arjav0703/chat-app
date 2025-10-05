@@ -4,6 +4,7 @@ description = "A simple chat application using Rust"
 license = "MIT"
 version = "0.1.0"
 edition = "2024"
+repository = "https://github.com/arjav0703/chat-app"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
