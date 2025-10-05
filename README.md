@@ -17,6 +17,15 @@ Rusty Chat is a simple, TUI-based chat application built with Rust using the `cu
 2. Install using cargo:
    ```bash
    cargo install rusty-chat-app
+    ```
+3. Run the server:
+    ```bash
+    rusty-chat-server
+    ```
+4. In a new terminal, run the client:
+    ```bash
+    rusty-chat-client <username>
+    ```
 
 ### Running the Application locally
 1. Make sure you have Rust and Cargo installed. You can install it from [rustup.rs](https://rustup.rs/).
