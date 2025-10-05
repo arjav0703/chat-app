@@ -6,6 +6,7 @@ Rusty Chat is a simple, TUI-based chat application built with Rust using the `cu
 - `src/bin/server,rs`: The server-side implementation that handles incoming connections and broadcasts messages to all connected clients.
 - `src/bin/client.rs`: The client-side implementation that connects to the server, sends messages, and displays incoming messages in a TUI.
 
+![DemoVideo](https://hc-cdn.hel1.your-objectstorage.com/s/v3/f93913ca34e50ba2272f34076d9d5766000b0cc3_2025-09-29_22-36-09.mp4)
 
 ### Supported Platforms:
 - Linux
