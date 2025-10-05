@@ -1,5 +1,5 @@
 [package]
-name = "rusty-chat"
+name = "rusty-chat-app"
 description = "A simple chat application using Rust"
 license = "MIT"
 version = "0.1.0"
